@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.repository.mapper.UserInfoMapper">
+	<resultMap id="UserInfo" type="com.pojo.dto.UserInfo" />
+	<resultMap id="UserInfoResponse" type="com.pojo.vo.UserInfoResponse" />
+
+	<select id="findUserByAccount" resultMap="UserInfoResponse">
+		SELECT
+			ACCOUNT AS account,
+		    REAL_NAME AS realName,
+			CITY AS city,
+			DISTRICT AS district,
+			ADDRESS AS address,
+			PHONE_NUM AS phoneNum,
+			URL AS url
+		FROM
+			USER_INFO
+		WHERE
+			ACCOUNT = #{account}
+	</select>
+
+	<select id="findUserById" resultMap="UserInfoResponse" parameterType="Integer">
+		SELECT
+			ACCOUNT AS account,
+			REAL_NAME AS realName,
+			CITY AS city,
+			DISTRICT AS district,
+			ADDRESS AS address,
+			PHONE_NUM AS phoneNum,
+			URL AS url
+		FROM
+			USER_INFO
+		WHERE
+			ID = #{id}
+	</select>
+
+	<select id="findUserByCity" resultMap="UserInfoResponse">
+		SELECT
+			ACCOUNT AS account,
+			REAL_NAME AS realName,
+			CITY AS city,
+			DISTRICT AS district,
+			ADDRESS AS address,
+			PHONE_NUM AS phoneNum,
+			URL AS url
+		FROM
+			USER_INFO
+		WHERE
+			CITY = #{city}
+	</select>
+
+
+	<insert id="insertUserInfo" useGeneratedKeys="true" keyProperty="id" parameterType="UserInfo">
+		INSERT INTO
+		USER_INFO(
+			ACCOUNT,
+			PASSWORD,
+			REAL_NAME,
+			CITY,
+			DISTRICT,
+			ADDRESS,
+			PHONE_NUM,
+			URL,
+			STATUS,
+			CREATE_TIME,
+			UPDATE_TIME
+		) VALUES(
+			#{account},
+			#{password},
+			#{realName},
+			#{city},
+			#{district},
+			#{address},
+			#{phoneNum},
+			#{url},
+			#{status},
+			#{createTime},
+			#{updateTime}
+		)
+
+	</insert>
+
+	<update id="updateUserInfo" parameterType="UserInfoResponse">
+		UPDATE USER_INFO
+		SET
+			REAL_NAME=#{realName},
+			CITY=#{city},
+			DISTRICT=#{district},
+			ADDRESS=#{address},
+			PHONE_NUM=#{phoneNum},
+			URL=#{url},
+			UPDATE_TIME=now()
+		WHERE ACCOUNT = #{account}
+	</update>
+
+	<delete id="deleteUserInfo" parameterType="String">
+		DELETE FROM USER_INFO WHERE ACCOUNT=#{account}
+	</delete>
+
+</mapper>
