@@ -1,6 +1,8 @@
 package com.service.impl;
 
+import com.pojo.dto.BetLottery;
 import com.pojo.dto.UserInfo;
+import com.pojo.vo.BetLotteryRequest;
 import com.pojo.vo.UserInfoRequest;
 import com.pojo.vo.UserInfoResponse;
 import com.repository.UserInfoRepository;
@@ -9,6 +11,7 @@ import com.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -61,8 +64,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public void updateUserInfo(UserInfoRequest request) {
 
-        //UserInfo userInfo = userInfoRepository.findByAccount(request.getAccount());
-
         userInfoMapper.updateUserInfo(request);
     }
 
@@ -71,4 +72,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         userInfoMapper.deleteUserInfo(account);
     }
+
+
+
 }

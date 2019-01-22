@@ -4,6 +4,7 @@
 	<resultMap id="UserInfo" type="com.pojo.dto.UserInfo" />
 	<resultMap id="UserInfoResponse" type="com.pojo.vo.UserInfoResponse" />
 
+
 	<select id="findUserByAccount" resultMap="UserInfoResponse">
 		SELECT
 			ACCOUNT AS account,
@@ -80,10 +81,11 @@
 
 	</insert>
 
-	<update id="updateUserInfo" parameterType="UserInfoResponse">
+	<update id="updateUserInfo">
 		UPDATE USER_INFO
 		SET
 			REAL_NAME=#{realName},
+		    PASSWORD=#{password}
 			CITY=#{city},
 			DISTRICT=#{district},
 			ADDRESS=#{address},
