@@ -81,11 +81,11 @@
 
 	</insert>
 
-	<update id="updateUserInfo">
+	<update id="updateUserInfo" parameterType="UserInfoRequest">
 		UPDATE USER_INFO
 		SET
 			REAL_NAME=#{realName},
-		    PASSWORD=#{password}
+		    PASSWORD=#{password},
 			CITY=#{city},
 			DISTRICT=#{district},
 			ADDRESS=#{address},
