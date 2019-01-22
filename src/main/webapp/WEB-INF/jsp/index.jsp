@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>$Title$</title>
+    <meta name="charset" content="UTF8">
+    <title></title>
 </head>
 <body>
 <input type="text" id="inputName">
@@ -13,10 +14,10 @@
             url: "http://localhost:8090/user/getUserByAccount",
             method: "GET",
             data: {
-                account: $("#query").val()
+                account: $("#inputName").val()
             },
             success: function (result) {
-                alert(result.name + "～你好啊！")
+                alert(result.realName + "～你好啊！")
             }
         })
     })
