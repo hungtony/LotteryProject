@@ -1,7 +1,7 @@
 package com.service;
 
-import com.pojo.vo.UserInfoResponse;
-import com.pojo.vo.UserInfoRequest;
+import com.pojo.dto.UserInfoResponse;
+import com.pojo.dto.UserInfoRequest;
 
 import java.util.List;
 

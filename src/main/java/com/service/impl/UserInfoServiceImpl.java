@@ -1,8 +1,8 @@
 package com.service.impl;
 
-import com.pojo.dto.UserInfo;
-import com.pojo.vo.UserInfoRequest;
-import com.pojo.vo.UserInfoResponse;
+import com.pojo.entity.UserInfo;
+import com.pojo.dto.UserInfoRequest;
+import com.pojo.dto.UserInfoResponse;
 import com.repository.UserInfoRepository;
 import com.repository.mapper.UserInfoMapper;
 import com.service.UserInfoService;

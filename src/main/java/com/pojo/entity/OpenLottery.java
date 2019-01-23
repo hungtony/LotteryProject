@@ -1,4 +1,4 @@
-package com.pojo.dto;
+package com.pojo.entity;
 
 
 public class OpenLottery {

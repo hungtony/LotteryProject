@@ -1,18 +1,16 @@
-package com.pojo.vo;
+package com.pojo.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfoRequest {
+public class UserInfoResponse {
 
     private String account;
-    private String password;
     private String realName;
     private String city;
     private String district;

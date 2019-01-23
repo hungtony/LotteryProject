@@ -1,8 +1,8 @@
 package com.repository.mapper;
 
-import com.pojo.dto.UserInfo;
-import com.pojo.vo.UserInfoRequest;
-import com.pojo.vo.UserInfoResponse;
+import com.pojo.entity.UserInfo;
+import com.pojo.dto.UserInfoRequest;
+import com.pojo.dto.UserInfoResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

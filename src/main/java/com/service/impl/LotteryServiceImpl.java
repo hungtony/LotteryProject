@@ -1,13 +1,14 @@
 package com.service.impl;
 
-import com.pojo.dto.DrawResult;
-import com.pojo.dto.LotteryOrder;
-import com.pojo.vo.BetLotteryRequest;
+import com.pojo.entity.DrawResult;
+import com.pojo.entity.LotteryOrder;
+import com.pojo.dto.BetLotteryRequest;
 import com.repository.DrawResultRepository;
 import com.repository.LotteryOrderRepository;
 import com.repository.mapper.LotteryMapper;
 import com.service.LotteryService;
 import com.util.LotteryUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,8 +17,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class LotteryServiceImpl implements LotteryService {
+
 
     @Resource
     LotteryMapper lotteryMapper;
@@ -51,31 +54,45 @@ public class LotteryServiceImpl implements LotteryService {
     }
 
     @Override
-    public void openDraw(Integer lotteryId) {
+    public Boolean openDraw(Integer lotteryId) {
 
-        String issueCode;
+        /**開獎,將結果寫入當期欄位**/
+        Optional<DrawResult> drawResult = Optional.ofNullable(drawResultRepository.findTopByLotteryIdOrderBySaleTimeDesc(lotteryId));
+
+        if(!drawResult.isPresent()){
+            log.error("No drawResult found, please check SQL statement.");
+            return false;
+        } //沒撈到就返回
+
+        drawResult.get().setDrawNumbers(LotteryUtils.generateNumbers());
+        drawResult.get().setOpenDrawTime(LocalDateTime.now());
+
+        lotteryMapper.updateDrawResult(drawResult.get());
+        log.info("Open draw success!");
+
+        /**對獎**/
+
+        /**產生下一期期號**/
+
         String today = LocalDate.now().toString().replace("-","");
 
+        String issueCode = drawResult.get().getIssueCode();
+        String nextIssueCode;
 
-        Optional<DrawResult> lastDrawResult = Optional
-                .ofNullable(drawResultRepository.findTopByLotteryIdOrderBySaleTimeDesc(lotteryId));
-
-        if(!lastDrawResult.isPresent()||!lastDrawResult.get().getIssueCode().contains(today)){
-            issueCode = today + lotteryId + "001";
+        if(!issueCode.contains(today)){
+            nextIssueCode = today + lotteryId + "001";
         }
         else {
-            issueCode = String.valueOf(Long.valueOf(lastDrawResult.get().getIssueCode())+1);
+            nextIssueCode = String.valueOf(Long.valueOf(issueCode)+1);
         }
 
-        DrawResult drawResult = new DrawResult().builder()
+        DrawResult nextDrawResult = new DrawResult().builder()
                 .lotteryId(lotteryId)
-                .drawResult(LotteryUtils.generateNumbers())
-                .openDrawTime(LocalDateTime.now())
                 .saleTime(LocalDateTime.now())
-                .issueCode(issueCode)
+                .issueCode(nextIssueCode)
                 .build();
+        lotteryMapper.insertDrawResult(nextDrawResult);
 
-        lotteryMapper.insertDrawResult(drawResult);
-
+        return true;
     }
 }

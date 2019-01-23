@@ -1,4 +1,4 @@
-package com.pojo.dto;
+package com.pojo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,15 +15,17 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "DRAW_RESULT")
-public class DrawResult {
+@Table(name = "LOTTERY_ORDER")
+public class LotteryOrder {
 
     @Id
     private Integer id;
     private Integer lotteryId;
     private String issueCode;
-    private String drawResult;
-    private LocalDateTime saleTime;
-    private LocalDateTime openDrawTime;
+    private Integer userId;
+    private Long multiple;
+    private String betNumber;
+    private LocalDateTime orderTime;
+    private Integer result;
 
 }

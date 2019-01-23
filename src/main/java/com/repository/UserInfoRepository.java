@@ -1,7 +1,6 @@
 package com.repository;
 
-import com.pojo.dto.UserInfo;
-import com.pojo.vo.UserInfoResponse;
+import com.pojo.entity.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

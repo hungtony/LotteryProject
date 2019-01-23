@@ -1,7 +1,7 @@
 package com.controller;
 
-import com.pojo.dto.LotteryOrder;
-import com.pojo.vo.BetLotteryRequest;
+import com.pojo.entity.LotteryOrder;
+import com.pojo.dto.BetLotteryRequest;
 import com.service.LotteryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,10 +37,9 @@ public class GameController {
     @ApiOperation(value = "開獎",notes = "Test")
     @GetMapping(value = "/openDraw")
     @ResponseBody
-    public void openDraw(@RequestParam Integer lotteryId){
+    public Boolean openDraw(@RequestParam Integer lotteryId){
 
-        lotteryService.openDraw(lotteryId);
-
+        return  lotteryService.openDraw(lotteryId);
     }
 
     //查詢投注記錄

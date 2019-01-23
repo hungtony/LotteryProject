@@ -1,7 +1,7 @@
 package com.controller;
 
-import com.pojo.vo.UserInfoResponse;
-import com.pojo.vo.UserInfoRequest;
+import com.pojo.dto.UserInfoResponse;
+import com.pojo.dto.UserInfoRequest;
 import com.service.UserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
