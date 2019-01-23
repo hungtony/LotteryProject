@@ -1,11 +1,7 @@
 package com.service;
 
-import com.pojo.dto.BetLottery;
-import com.pojo.dto.UserInfo;
-import com.pojo.vo.BetLotteryRequest;
 import com.pojo.vo.UserInfoResponse;
 import com.pojo.vo.UserInfoRequest;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

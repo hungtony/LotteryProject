@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BetLotteryRequest {
 
-    private String lotteryId;
+    private Integer lotteryId;
     private Integer userId;
     private Long multiple;
-    private String betNumbers;
+    private String betNumber;
 
 }

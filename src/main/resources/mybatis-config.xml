@@ -16,7 +16,8 @@
         <typeAlias alias="Message" type="com.pojo.dto.Message" />
         <typeAlias alias="UserInfoResponse" type="com.pojo.vo.UserInfoResponse" />
         <typeAlias alias="UserInfoRequest" type="com.pojo.vo.UserInfoRequest" />
-        <typeAlias alias="BetLottery" type="com.pojo.dto.BetLottery" />
+        <typeAlias alias="BetLottery" type="com.pojo.dto.LotteryOrder" />
         <typeAlias alias="BetLotteryRequest" type="com.pojo.vo.BetLotteryRequest" />
+        <typeAlias alias="DrawResult" type="com.pojo.dto.DrawResult" />
     </typeAliases>
 </configuration>

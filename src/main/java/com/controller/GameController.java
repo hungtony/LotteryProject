@@ -1,6 +1,6 @@
 package com.controller;
 
-import com.pojo.dto.BetLottery;
+import com.pojo.dto.LotteryOrder;
 import com.pojo.vo.BetLotteryRequest;
 import com.service.LotteryService;
 import io.swagger.annotations.Api;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -33,15 +34,24 @@ public class GameController {
     }
 
     //開獎
+    @ApiOperation(value = "開獎",notes = "Test")
+    @GetMapping(value = "/openDraw")
+    @ResponseBody
+    public void openDraw(@RequestParam Integer lotteryId){
+
+        lotteryService.openDraw(lotteryId);
+
+    }
 
     //查詢投注記錄
-
+    @ApiOperation(value = "查詢投注記錄",notes = "Test")
     @GetMapping(value = "/getBetLottery")
-    public List<BetLottery> getBetLottery(Integer id){
+    @ResponseBody
+    public List<LotteryOrder> getBetLottery(@RequestParam Integer id){
 
-        List<BetLottery> betLotteryList = lotteryService.getBetLottery(id);
+        List<LotteryOrder> lotteryOrderList = lotteryService.getLotteryOrder(id);
 
-        return betLotteryList;
+        return lotteryOrderList;
     }
 
     //歷次紀錄分析

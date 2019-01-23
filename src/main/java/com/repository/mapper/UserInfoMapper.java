@@ -1,8 +1,6 @@
 package com.repository.mapper;
 
-import com.pojo.dto.BetLottery;
 import com.pojo.dto.UserInfo;
-import com.pojo.vo.BetLotteryRequest;
 import com.pojo.vo.UserInfoRequest;
 import com.pojo.vo.UserInfoResponse;
 import org.apache.ibatis.annotations.Mapper;
