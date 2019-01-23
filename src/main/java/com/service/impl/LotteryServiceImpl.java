@@ -31,11 +31,18 @@ public class LotteryServiceImpl implements LotteryService {
     @Resource
     LotteryOrderRepository lotteryOrderRepository;
 
+
+    /****
+     * TODO:null驗證
+     */
     @Override
     public void insertBetLottery(BetLotteryRequest request) {
 
+        String issueCode = drawResultRepository.findTopByLotteryIdOrderBySaleTimeDesc(request.getLotteryId()).getIssueCode();
+
+
         LotteryOrder bet = new LotteryOrder().builder()
-                .issueCode(LocalDate.now().toString().replace("-","")+"001")//待修正
+                .issueCode(issueCode)
                 .lotteryId(request.getLotteryId())
                 .betNumber(request.getBetNumber())
                 .multiple(request.getMultiple())
@@ -71,6 +78,7 @@ public class LotteryServiceImpl implements LotteryService {
         log.info("Open draw success!");
 
         /**對獎**/
+
 
         /**產生下一期期號**/
 
