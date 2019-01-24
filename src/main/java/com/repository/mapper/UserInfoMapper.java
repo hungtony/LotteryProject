@@ -16,5 +16,4 @@ public interface UserInfoMapper {
     void insertUserInfo(UserInfo userInfo);
     void deleteUserInfo(String account);
     void updateUserInfo(UserInfoRequest request);
-
 }

@@ -4,7 +4,6 @@ import com.pojo.entity.DrawResult;
 import com.pojo.entity.LotteryOrder;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
 
 @Mapper
 public interface LotteryMapper {
