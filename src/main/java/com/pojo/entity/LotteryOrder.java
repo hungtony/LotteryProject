@@ -27,5 +27,6 @@ public class LotteryOrder {
     private String betNumber;
     private LocalDateTime orderTime;
     private Integer result;
+    private Boolean redeem;
 
 }

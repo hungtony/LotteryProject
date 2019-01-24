@@ -53,6 +53,21 @@
 			CITY = #{city}
 	</select>
 
+	<select id="findMoneyByUserId" resultMap="Long">
+		SELECT
+			MONEY AS money
+		FROM
+			USER_INFO
+		WHERE
+			ID = #{userId}
+	</select>
+
+	<update id="updateMoneyByUserId">
+		UPDATE USER_INFO
+		SET
+		  	MONEY = #{money}
+		WHERE ID = #{userId}
+	</update>
 
 	<insert id="insertUserInfo" useGeneratedKeys="true" keyProperty="id" parameterType="UserInfo">
 		INSERT INTO

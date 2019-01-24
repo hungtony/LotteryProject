@@ -16,4 +16,6 @@ public interface UserInfoMapper {
     void insertUserInfo(UserInfo userInfo);
     void deleteUserInfo(String account);
     void updateUserInfo(UserInfoRequest request);
+    Long findMoneyByUserId(Integer userId);
+    void updateMoneyByUserId(Integer userId, Long money);
 }

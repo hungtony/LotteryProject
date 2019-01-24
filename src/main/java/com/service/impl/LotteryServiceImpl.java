@@ -6,6 +6,7 @@ import com.pojo.dto.BetLotteryRequest;
 import com.repository.DrawResultRepository;
 import com.repository.LotteryOrderRepository;
 import com.repository.mapper.LotteryMapper;
+import com.repository.mapper.UserInfoMapper;
 import com.service.LotteryService;
 import com.util.LotteryUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,9 @@ public class LotteryServiceImpl implements LotteryService {
     LotteryMapper lotteryMapper;
 
     @Resource
+    UserInfoMapper userInfoMapper;
+
+    @Resource
     DrawResultRepository drawResultRepository;
 
     @Resource
@@ -43,6 +47,19 @@ public class LotteryServiceImpl implements LotteryService {
         String issueCode = drawResultRepository.findTopByLotteryIdOrderByIssueCodeDesc(request.getLotteryId()).getIssueCode();
 
 
+        //確認餘額足夠
+        Long userMoney = userInfoMapper.findMoneyByUserId(request.getUserId());
+
+        if(userMoney < request.getMultiple()*100){
+            log.error("Money is not enough!");
+            return false;
+        }
+
+        //扣錢
+        userMoney -= request.getMultiple()*100;
+        userInfoMapper.updateMoneyByUserId(request.getUserId(),userMoney);
+
+        //成立投注單
         LotteryOrder bet = new LotteryOrder().builder()
                 .issueCode(issueCode)
                 .lotteryId(request.getLotteryId())
@@ -51,6 +68,7 @@ public class LotteryServiceImpl implements LotteryService {
                 .orderTime(LocalDateTime.now())
                 .userId(request.getUserId())
                 .result(0)
+                .redeem(false)
                 .build();
 
         lotteryMapper.insertBetLottery(bet);
@@ -61,7 +79,7 @@ public class LotteryServiceImpl implements LotteryService {
     @Override
     public List<LotteryOrder> getLotteryOrder(Integer userId, Integer count) {
 
-        Pageable pageable = PageRequest.of(0,count);
+        Pageable pageable = PageRequest.of(0, count);
 
         return lotteryOrderRepository.findByUserIdOrderByOrderTimeDesc(userId, pageable);
     }
@@ -69,7 +87,7 @@ public class LotteryServiceImpl implements LotteryService {
     @Override
     public List<DrawResult> getDrawResult(Integer lotteryId, Integer count) {
 
-        Pageable pageable = PageRequest.of(0,count);
+        Pageable pageable = PageRequest.of(0, count);
 
         return drawResultRepository.findByLotteryIdOrderByIssueCodeDesc(lotteryId, pageable);
     }
@@ -96,9 +114,9 @@ public class LotteryServiceImpl implements LotteryService {
 
         lotteryOrderList.forEach(l->{
             l.setResult(LotteryUtils.checkLottery(l.getBetNumber(),drawResult.get().getDrawNumbers()));
+            if(l.getResult() == 99) {l.setRedeem(true);}
             lotteryMapper.checkBetLottery(l);
         });
-
 
 
         /**產生下一期期號**/

@@ -13,7 +13,8 @@
 			MULTIPLE,
 			BET_NUMBER,
 			ORDER_TIME,
-			RESULT
+			RESULT,
+		    REDEEM
 		) VALUES(
 		    #{id},
 			#{lotteryId},
@@ -22,7 +23,8 @@
 			#{multiple},
 			#{betNumber},
 			#{orderTime},
-			#{result}
+			#{result},
+		    #{redeem}
 		)
 
 	</insert>
@@ -47,6 +49,25 @@
 
 	</insert>
 
+	<select id="findLotteryOrderNotRedeem" resultMap="BetResultResponse">
+		SELECT
+		    o.USER_ID AS userId,
+			o.LOTTERY_ID AS lotteryId,
+			o.ISSUE_CODE AS issueCode,
+		    o.MULTIPLE AS multiple,
+		    o.BET_NUMBER AS betNumber,
+		    r.DRAW_NUMBERS AS drawNumbers,
+			r.SALE_TIME AS saleTime,
+		    r.OPEN_DRAW_TIME AS openDrawTime,
+		    o.RESULT AS result
+		FROM
+			LOTTERY_ORDER o
+		INNER JOIN DRAW_RESULT r
+		ON o.ISSUE_CODE = r.ISSUE_CODE
+		WHERE
+			o.USER_ID = #{userId} AND o.REDEEM = false
+	</select>
+
 
 	<update id="updateDrawResult">
 		UPDATE DRAW_RESULT
@@ -57,8 +78,8 @@
 
 	<update id="checkBetLottery">
 		UPDATE LOTTERY_ORDER
-		SET RESULT=#{result}
-		WHERE ID=#{id}
+		SET RESULT = #{result}
+		WHERE ID = #{id}
 	</update>
 
 </mapper>

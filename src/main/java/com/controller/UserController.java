@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.pojo.dto.BetResultResponse;
 import com.pojo.dto.UserInfoResponse;
 import com.pojo.dto.UserInfoRequest;
 import com.service.UserInfoService;
@@ -69,7 +70,7 @@ public class UserController {
     @ResponseBody
     public void updateUser(@RequestBody UserInfoRequest request){
 
-            userInfoService.updateUserInfo(request);
+        userInfoService.updateUserInfo(request);
     }
 
     @ApiOperation(value = "刪除使用者資料",notes = "Test")
@@ -79,6 +80,23 @@ public class UserController {
 
         userInfoService.deleteUserInfo(account);
     }
+
+    @ApiOperation(value = "兌獎",notes = "Test")
+    @PostMapping(value = "/redeemLottery")
+    @ResponseBody
+    public void redeemLottery(@RequestParam Integer userId){
+
+        userInfoService.redeemLottery(userId);
+    }
+
+    @ApiOperation(value = "查看兌獎",notes = "Test")
+    @PostMapping(value = "checkNotRedeemLottery")
+    @ResponseBody
+    public List<BetResultResponse> checkNotRedeemLottery(@RequestParam Integer userId){
+
+        return userInfoService.getBetResultList(userId);
+    }
+
 
 
 }

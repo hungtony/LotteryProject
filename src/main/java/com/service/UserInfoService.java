@@ -1,5 +1,6 @@
 package com.service;
 
+import com.pojo.dto.BetResultResponse;
 import com.pojo.dto.UserInfoResponse;
 import com.pojo.dto.UserInfoRequest;
 
@@ -14,5 +15,7 @@ public interface UserInfoService {
     void insertUserInfo(UserInfoRequest request);
     void updateUserInfo(UserInfoRequest request);
     void deleteUserInfo(String account);
+    void redeemLottery(Integer userId);
+    List<BetResultResponse> getBetResultList(Integer userId);
 
 }

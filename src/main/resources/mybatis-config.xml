@@ -20,5 +20,6 @@
         <typeAlias alias="LotteryOrder" type="com.pojo.entity.LotteryOrder" />
         <typeAlias alias="BetLotteryRequest" type="com.pojo.dto.BetLotteryRequest" />
         <typeAlias alias="DrawResult" type="com.pojo.entity.DrawResult" />
+        <typeAlias alias="BetResultResponse" type="com.pojo.dto.BetResultResponse" />
     </typeAliases>
 </configuration>
