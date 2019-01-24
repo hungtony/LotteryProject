@@ -13,7 +13,8 @@
 			DISTRICT AS district,
 			ADDRESS AS address,
 			PHONE_NUM AS phoneNum,
-			URL AS url
+			URL AS url,
+			MONEY AS money
 		FROM
 			USER_INFO
 		WHERE
@@ -28,7 +29,8 @@
 			DISTRICT AS district,
 			ADDRESS AS address,
 			PHONE_NUM AS phoneNum,
-			URL AS url
+			URL AS url,
+			MONEY AS money
 		FROM
 			USER_INFO
 		WHERE
@@ -43,7 +45,8 @@
 			DISTRICT AS district,
 			ADDRESS AS address,
 			PHONE_NUM AS phoneNum,
-			URL AS url
+			URL AS url,
+			MONEY AS money
 		FROM
 			USER_INFO
 		WHERE
@@ -64,7 +67,8 @@
 			URL,
 			STATUS,
 			CREATE_TIME,
-			UPDATE_TIME
+			UPDATE_TIME,
+		    MONEY
 		) VALUES(
 			#{account},
 			#{password},
@@ -76,7 +80,8 @@
 			#{url},
 			#{status},
 			#{createTime},
-			#{updateTime}
+			#{updateTime},
+		    #{money}
 		)
 
 	</insert>

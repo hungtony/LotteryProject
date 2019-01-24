@@ -17,5 +17,6 @@ public class UserInfoResponse {
     private String address;
     private String phoneNum;
     private String url;
+    private long money;
 
 }

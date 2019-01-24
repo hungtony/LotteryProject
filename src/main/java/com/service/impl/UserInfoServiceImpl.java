@@ -53,6 +53,7 @@ public class UserInfoServiceImpl implements UserInfoService {
                 .createTime(LocalDateTime.now())
                 .updateTime(LocalDateTime.now())
                 .status(1)
+                .money(100L)
                 .build();
 
         userInfoMapper.insertUserInfo(userInfo);

@@ -31,6 +31,6 @@ public class UserInfo {
     private Integer status;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
-
+    private Long money;
 
 }

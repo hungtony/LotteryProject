@@ -9,6 +9,8 @@ import com.repository.mapper.LotteryMapper;
 import com.service.LotteryService;
 import com.util.LotteryUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,9 +38,9 @@ public class LotteryServiceImpl implements LotteryService {
      * TODO:null驗證
      */
     @Override
-    public void insertBetLottery(BetLotteryRequest request) {
+    public Boolean insertBetLottery(BetLotteryRequest request) {
 
-        String issueCode = drawResultRepository.findTopByLotteryIdOrderBySaleTimeDesc(request.getLotteryId()).getIssueCode();
+        String issueCode = drawResultRepository.findTopByLotteryIdOrderByIssueCodeDesc(request.getLotteryId()).getIssueCode();
 
 
         LotteryOrder bet = new LotteryOrder().builder()
@@ -52,32 +54,51 @@ public class LotteryServiceImpl implements LotteryService {
                 .build();
 
         lotteryMapper.insertBetLottery(bet);
+
+        return true;
     }
 
     @Override
-    public List<LotteryOrder> getLotteryOrder(Integer id) {
+    public List<LotteryOrder> getLotteryOrder(Integer userId, Integer count) {
 
-        return lotteryOrderRepository.findByUserId(id);
+        Pageable pageable = PageRequest.of(0,count);
+
+        return lotteryOrderRepository.findByUserIdOrderByOrderTimeDesc(userId, pageable);
+    }
+
+    @Override
+    public List<DrawResult> getDrawResult(Integer lotteryId, Integer count) {
+
+        Pageable pageable = PageRequest.of(0,count);
+
+        return drawResultRepository.findByLotteryIdOrderByIssueCodeDesc(lotteryId, pageable);
     }
 
     @Override
     public Boolean openDraw(Integer lotteryId) {
 
         /**開獎,將結果寫入當期欄位**/
-        Optional<DrawResult> drawResult = Optional.ofNullable(drawResultRepository.findTopByLotteryIdOrderBySaleTimeDesc(lotteryId));
+        Optional<DrawResult> drawResult = Optional.ofNullable(drawResultRepository.findTopByLotteryIdOrderByIssueCodeDesc(lotteryId));
 
         if(!drawResult.isPresent()){
             log.error("No drawResult found, please check SQL statement.");
             return false;
         } //沒撈到就返回
 
-        drawResult.get().setDrawNumbers(LotteryUtils.generateNumbers());
+        drawResult.get().setDrawNumbers(LotteryUtils.generateNumbers(7));
         drawResult.get().setOpenDrawTime(LocalDateTime.now());
 
         lotteryMapper.updateDrawResult(drawResult.get());
         log.info("Open draw success!");
 
         /**對獎**/
+        List<LotteryOrder> lotteryOrderList = lotteryOrderRepository.findByIssueCode(drawResult.get().getIssueCode());
+
+        lotteryOrderList.forEach(l->{
+            l.setResult(LotteryUtils.checkLottery(l.getBetNumber(),drawResult.get().getDrawNumbers()));
+            lotteryMapper.checkBetLottery(l);
+        });
+
 
 
         /**產生下一期期號**/
