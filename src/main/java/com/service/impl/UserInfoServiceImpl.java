@@ -82,9 +82,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public void redeemLottery(Integer userId) {
 
-        List<BetResultResponse> betResultList = lotteryMapper.findLotteryOrderNotRedeem(userId);
+        List<LotteryOrder> lotteryOrderList = lotteryMapper.findLotteryOrderNotRedeem(userId);
 
-        Long winMoney = betResultList.stream().map(b->{
+        Long winMoney = lotteryOrderList.stream().map(b->{
 
             switch (b.getResult()){
                 case 1: return b.getMultiple()*10000000;
@@ -98,18 +98,20 @@ public class UserInfoServiceImpl implements UserInfoService {
 
                 default:return 0;
             }
-        }).collect(Collectors.summingLong(Integer::longValue));
+        }).collect(Collectors.summingLong(m->m.longValue()));
 
-        //TODO:redeem set true;
+        //redeem set true;
+        lotteryOrderList.forEach(l->{
+            lotteryMapper.updateRedeem(l.getId());
+        });
 
-
-        //TODO:需要取出金額計算完後再放入
+        //需要取出金額計算完後再放入
         userInfoMapper.updateMoneyByUserId(userId,winMoney);
     }
 
     @Override
-    public List<BetResultResponse> getBetResultList(Integer userId) {
+    public List<BetResultResponse> getNotRedeemList(Integer userId) {
 
-        return lotteryMapper.findLotteryOrderNotRedeem(userId);
+        return lotteryMapper.showLotteryOrderNotRedeem(userId);
     }
 }

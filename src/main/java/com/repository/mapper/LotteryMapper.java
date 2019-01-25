@@ -13,7 +13,10 @@ public interface LotteryMapper {
 
     void insertBetLottery(LotteryOrder lotteryOrder);
     void checkBetLottery(LotteryOrder lotteryOrder);
+    void updateRedeem(Integer id);
     void insertDrawResult(DrawResult result);
     void updateDrawResult(DrawResult result);
-    List<BetResultResponse> findLotteryOrderNotRedeem(Integer userId);
+    List<BetResultResponse> showLotteryOrderNotRedeem(Integer userId);
+    List<LotteryOrder> findLotteryOrderNotRedeem(Integer userId);
+
 }

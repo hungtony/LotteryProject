@@ -4,6 +4,7 @@ import com.pojo.entity.UserInfo;
 import com.pojo.dto.UserInfoRequest;
 import com.pojo.dto.UserInfoResponse;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface UserInfoMapper {
     void deleteUserInfo(String account);
     void updateUserInfo(UserInfoRequest request);
     Long findMoneyByUserId(Integer userId);
-    void updateMoneyByUserId(Integer userId, Long money);
+    void updateMoneyByUserId(@Param("userId")Integer userId, @Param("money") Long money);
 }

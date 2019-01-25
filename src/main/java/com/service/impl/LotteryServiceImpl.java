@@ -50,14 +50,14 @@ public class LotteryServiceImpl implements LotteryService {
         //確認餘額足夠
         Long userMoney = userInfoMapper.findMoneyByUserId(request.getUserId());
 
-        if(userMoney < request.getMultiple()*100){
+        if(userMoney < request.getMultiple()*100L){
             log.error("Money is not enough!");
             return false;
         }
 
         //扣錢
-        userMoney -= request.getMultiple()*100;
-        userInfoMapper.updateMoneyByUserId(request.getUserId(),userMoney);
+        Long payMoney = -request.getMultiple()*100L;
+        userInfoMapper.updateMoneyByUserId(request.getUserId(),payMoney);
 
         //成立投注單
         LotteryOrder bet = new LotteryOrder().builder()

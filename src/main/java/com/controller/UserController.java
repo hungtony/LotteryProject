@@ -6,8 +6,7 @@ import com.pojo.dto.UserInfoRequest;
 import com.service.UserInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.List;
 
+@Slf4j
 @Api(value = "/userApi")
 @Controller
 @RequestMapping(value = "/user")
@@ -26,8 +26,6 @@ public class UserController {
 
     @Resource
     UserInfoService userInfoService;
-
-    Logger log = LoggerFactory.getLogger(UserController.class);
 
     @ApiOperation(value = "根據帳號取得使用者資料",notes = "Test")
     @GetMapping(value = "/getUserByAccount")
@@ -89,12 +87,12 @@ public class UserController {
         userInfoService.redeemLottery(userId);
     }
 
-    @ApiOperation(value = "查看兌獎",notes = "Test")
+    @ApiOperation(value = "查看未兌換獎項",notes = "Test")
     @PostMapping(value = "checkNotRedeemLottery")
     @ResponseBody
     public List<BetResultResponse> checkNotRedeemLottery(@RequestParam Integer userId){
 
-        return userInfoService.getBetResultList(userId);
+        return userInfoService.getNotRedeemList(userId);
     }
 
 

@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.repository.mapper.LotteryMapper">
 	<resultMap id="LotteryOrder" type="com.pojo.entity.LotteryOrder" />
+	<resultMap id="BetResultResponse" type="com.pojo.dto.BetResultResponse" />
 
 	<insert id="insertBetLottery" useGeneratedKeys="true" keyProperty="id" parameterType="LotteryOrder">
 		INSERT INTO
@@ -49,7 +50,7 @@
 
 	</insert>
 
-	<select id="findLotteryOrderNotRedeem" resultMap="BetResultResponse">
+	<select id="showLotteryOrderNotRedeem" resultMap="BetResultResponse">
 		SELECT
 		    o.USER_ID AS userId,
 			o.LOTTERY_ID AS lotteryId,
@@ -65,9 +66,16 @@
 		INNER JOIN DRAW_RESULT r
 		ON o.ISSUE_CODE = r.ISSUE_CODE
 		WHERE
-			o.USER_ID = #{userId} AND o.REDEEM = false
+			o.USER_ID = #{userId} AND o.REDEEM = 0
 	</select>
 
+	<select id="findLotteryOrderNotRedeem" resultMap="LotteryOrder">
+		SELECT *
+		FROM
+			LOTTERY_ORDER
+		WHERE
+			USER_ID = #{userId} AND REDEEM = 0
+	</select>
 
 	<update id="updateDrawResult">
 		UPDATE DRAW_RESULT
@@ -79,6 +87,12 @@
 	<update id="checkBetLottery">
 		UPDATE LOTTERY_ORDER
 		SET RESULT = #{result}
+		WHERE ID = #{id}
+	</update>
+
+	<update id="updateRedeem">
+		UPDATE LOTTERY_ORDER
+		SET REDEEM = 1
 		WHERE ID = #{id}
 	</update>
 

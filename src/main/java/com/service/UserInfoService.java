@@ -16,6 +16,6 @@ public interface UserInfoService {
     void updateUserInfo(UserInfoRequest request);
     void deleteUserInfo(String account);
     void redeemLottery(Integer userId);
-    List<BetResultResponse> getBetResultList(Integer userId);
+    List<BetResultResponse> getNotRedeemList(Integer userId);
 
 }

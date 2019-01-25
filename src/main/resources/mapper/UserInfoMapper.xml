@@ -3,6 +3,7 @@
 <mapper namespace="com.repository.mapper.UserInfoMapper">
 	<resultMap id="UserInfo" type="com.pojo.entity.UserInfo" />
 	<resultMap id="UserInfoResponse" type="com.pojo.dto.UserInfoResponse" />
+	<resultMap id="Long" type="java.lang.Long" />
 
 
 	<select id="findUserByAccount" resultMap="UserInfoResponse">
@@ -65,7 +66,7 @@
 	<update id="updateMoneyByUserId">
 		UPDATE USER_INFO
 		SET
-		  	MONEY = #{money}
+			MONEY = MONEY + #{money}
 		WHERE ID = #{userId}
 	</update>
 
@@ -104,14 +105,14 @@
 	<update id="updateUserInfo" parameterType="UserInfoRequest">
 		UPDATE USER_INFO
 		SET
-			REAL_NAME=#{realName},
-		    PASSWORD=#{password},
-			CITY=#{city},
-			DISTRICT=#{district},
-			ADDRESS=#{address},
-			PHONE_NUM=#{phoneNum},
-			URL=#{url},
-			UPDATE_TIME=now()
+			REAL_NAME = #{realName},
+		    PASSWORD = #{password},
+			CITY = #{city},
+			DISTRICT = #{district},
+			ADDRESS = #{address},
+			PHONE_NUM = #{phoneNum},
+			URL = #{url},
+			UPDATE_TIME = now()
 		WHERE ACCOUNT = #{account}
 	</update>
 
